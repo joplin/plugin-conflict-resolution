@@ -1,0 +1,2 @@
+# Conflict Resolution Plugin
+*pending*
