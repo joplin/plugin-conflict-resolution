@@ -6,9 +6,14 @@ joplin.plugins.register({
 		
 		// DEBUG
 		const handle = await dialogs.create("conflictRes-mainDialog");
+		await dialogs.addScript(handle, './UI/codemirror/lib/codemirror.js');
+		await dialogs.addScript(handle, './UI/codemirror/lib/codemirror.css');
 		await dialogs.setHtml(handle, `<div id="conflictRes-Editor"></div>`);
 		await dialogs.addScript(handle, './UI/index.css');
-		await dialogs.addScript(handle, './UI/index.js');
+		setTimeout(async () => {
+			await dialogs.addScript(handle, './UI/codemirror/mode/markdown/markdown.js');
+			await dialogs.addScript(handle, './UI/index.js');
+		}, 1000);
 		const result = await dialogs.open(handle);
 		console.dir(result);
 
