@@ -55,6 +55,16 @@ joplin.plugins.register({
 		await dialogs.addScript(diffViewDialog, './UI/index.js');
 		await dialogs.addScript(diffViewDialog, './UI/codemirror/addon/merge/merge.css');
 		await dialogs.addScript(diffViewDialog, './UI/index.css');
+		await dialogs.setButtons(diffViewDialog, [
+			{
+				id: 'submit',
+				title: 'Save'
+			},
+			{
+				id: 'cancel',
+				title: 'Cancel'
+			}
+		]);
 
 		await joplin.commands.register({
 			name: 'resolveConflictsCommand',
