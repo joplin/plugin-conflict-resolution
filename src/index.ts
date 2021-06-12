@@ -28,15 +28,19 @@ async function openDiffWindow(noteIds : string[]) {
 		fields: ['body']
 	});
 
+	const remoteNoteContent = remoteNote.body.replace(/"/g, '&quot;');
+	const localNoteContent = localNote.body.replace(/"/g, '&quot;');
+
 	// These inputs are a simple hack in order to pass data into the WebView.
 	await dialogs.setHtml(diffViewDialog, `
 		<input id="pluginInstallDir" type="hidden" value="${await joplin.plugins.installationDir()}"/> 
-		<input id="origNote" type="hidden" value="${remoteNote.body.replace(/"/g, '')}"/> 
-		<input id="curNote" type="hidden" value="${localNote.body.replace(/"/g, '')}"/> 
+		<input id="origNote" type="hidden" value="${remoteNoteContent}"/> 
+		<input id="curNote" type="hidden" value="${localNoteContent}"/> 
 		<div id="conflictRes-Editor"></div>
 	`);
 
-	await dialogs.open(diffViewDialog);
+	let response = await dialogs.open(diffViewDialog);
+	console.dir(response);
 }
 
 joplin.plugins.register({
