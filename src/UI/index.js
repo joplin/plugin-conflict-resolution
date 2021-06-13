@@ -45,6 +45,12 @@ async function initCodeMirror() {
     });
 }
 
-// TODO: find a better way to wait for document load.
-// simple window.onload didn't work.
-setTimeout(initCodeMirror, 100);
+
+// see if DOM is already available
+if (document.readyState === "complete" || document.readyState === "interactive") {
+    // call on next available tick
+    // 1ms still didn't do the job. I had to make it 50ms
+    setTimeout(initCodeMirror, 50);
+} else {
+    document.addEventListener("DOMContentLoaded", initCodeMirror);
+}
