@@ -10,7 +10,7 @@ async function openDiffWindow(noteIds : string[]) {
 		return;
 	}
 	const noteId = noteIds[0];
-	
+
 	try {
 		await diffWindow.OpenWindow(noteId);
 	} catch(ex) {
@@ -21,7 +21,7 @@ async function openDiffWindow(noteIds : string[]) {
 joplin.plugins.register({
 	onStart: async function() {
 
-		diffWindow = new DiffWindow(joplin.views.dialogs, joplin.data, await joplin.plugins.installationDir());
+		diffWindow = new DiffWindow(joplin.views.dialogs, joplin.data, joplin.require('fs-extra'), await joplin.plugins.installationDir());
 
 		await diffWindow.Init("conflictResolution-dialog");
 
