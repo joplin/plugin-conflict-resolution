@@ -1,4 +1,23 @@
 body {
-    width: 100em;
-    height: 100em;
+    width: 1500px;
+    height: 800px;
+}
+
+#titlesBar {
+    display: flex;
+    margin-bottom: 5px;
+}
+
+.titleInput {
+    width: 100%;
+}
+
+#titleDivLeft {
+    margin-right: 80px;
+}
+
+#titleLeft, #titleRight {
+    font-size: large;
+    padding: 5px;
+    width: 98%;
 }
