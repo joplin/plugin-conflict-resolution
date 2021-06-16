@@ -20,12 +20,12 @@ export class DiffWindow {
     
     public async Init(id : string) {
         this.handle = await this.dialogsApi.create(id);
-		await this.dialogsApi.addScript(this.handle, './UI/codemirror/lib/codemirror.js');
-		await this.dialogsApi.addScript(this.handle, './UI/codemirror/lib/codemirror.css');
-		await this.dialogsApi.addScript(this.handle, './UI/diff_match_patch/diff_match_patch.js');
-		await this.dialogsApi.addScript(this.handle, './UI/index.js');
-		await this.dialogsApi.addScript(this.handle, './UI/codemirror/addon/merge/merge.css');
-		await this.dialogsApi.addScript(this.handle, './UI/index.css');
+		await this.dialogsApi.addScript(this.handle, './lib/codemirror/lib/codemirror.js');
+		await this.dialogsApi.addScript(this.handle, './lib/codemirror/lib/codemirror.css');
+		await this.dialogsApi.addScript(this.handle, './lib/diff_match_patch/diff_match_patch.js');
+		await this.dialogsApi.addScript(this.handle, './lib/codemirror/addon/merge/merge.css');
+		await this.dialogsApi.addScript(this.handle, './ui/DiffWindow/index.js');
+		await this.dialogsApi.addScript(this.handle, './ui/DiffWindow/index.css');
 		await this.dialogsApi.setButtons(this.handle, [
 			{
 				id: 'submit',
@@ -63,7 +63,7 @@ export class DiffWindow {
         const localNoteTitle = localNote.title.replace(/"/g, '&quot;');
     
         const htmlContents = await new Promise((res, rej) => {
-            this.fileSys.readFile(this.installDir + '/UI/index.html', (err: Error, data: string) => {
+            this.fileSys.readFile(this.installDir + '/ui/DiffWindow/index.html', (err: Error, data: string) => {
                 if(err) {
                     return rej(err);
                 }

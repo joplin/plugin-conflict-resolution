@@ -15,8 +15,8 @@ async function initCodeMirror() {
     // These scripts have to be loaded here in order to ensure Codemirror.js is already loaded by now.
     let script = document.createElement('script');
     let script2 = document.createElement('script');
-    script.src = installPath + '/UI/codemirror/mode/markdown/markdown.js';
-    script2.src = installPath + '/UI/codemirror/addon/merge/merge.js';
+    script.src = installPath + '/lib/codemirror/mode/markdown/markdown.js';
+    script2.src = installPath + '/lib/codemirror/addon/merge/merge.js';
 
     // This is needed because I have to wait for both the scripts to load before I do anything.
     let promises = [
