@@ -1,6 +1,8 @@
 let installPath = document.getElementById("pluginInstallDir").value;
-let origNote = document.getElementById("origNote").value;
+let remoteNote = document.getElementById("remoteNote").value;
 let curNote = document.getElementById("curNote").value;
+let remoteTitle = document.getElementById("remoteTitle").value;
+let curTitle = document.getElementById("curTitle").value;
 let myCodeMirror = null;
 
 function log(message) {
@@ -36,13 +38,16 @@ async function initCodeMirror() {
     await Promise.all(promises);
     
     myCodeMirror = CodeMirror.MergeView(document.getElementById('conflictRes-Editor'), {
-        origLeft: origNote,
+        origLeft: remoteNote,
         mode: 'markdown',
         lineNumbers: true,
         connect: 'align',
         value: curNote,
         lineWrapping: true
     });
+
+    document.getElementById("titleLeft").value = remoteTitle;
+    document.getElementById("titleRight").value = curTitle;
 }
 
 

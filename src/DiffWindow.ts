@@ -59,6 +59,8 @@ export class DiffWindow {
     
         const remoteNoteContent = remoteNote.body.replace(/"/g, '&quot;');
         const localNoteContent = localNote.body.replace(/"/g, '&quot;');
+        const remoteNoteTitle = remoteNote.title.replace(/"/g, '&quot;');
+        const localNoteTitle = localNote.title.replace(/"/g, '&quot;');
     
         const htmlContents = await new Promise((res, rej) => {
             this.fileSys.readFile(this.installDir + '/UI/index.html', (err: Error, data: string) => {
@@ -72,8 +74,10 @@ export class DiffWindow {
         // These inputs are a simple hack in order to pass data into the WebView.
         await this.dialogsApi.setHtml(this.handle, `
             <input id="pluginInstallDir" type="hidden" value="${this.installDir}"/> 
-            <input id="origNote" type="hidden" value="${remoteNoteContent}"/> 
+            <input id="remoteNote" type="hidden" value="${remoteNoteContent}"/> 
             <input id="curNote" type="hidden" value="${localNoteContent}"/> 
+            <input id="remoteTitle" type="hidden" value="${remoteNoteTitle}"/> 
+            <input id="curTitle" type="hidden" value="${localNoteTitle}"/> 
             ${htmlContents}
         `);
     
