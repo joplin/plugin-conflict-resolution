@@ -62,14 +62,7 @@ export class DiffWindow {
         const remoteNoteTitle = remoteNote.title.replace(/"/g, '&quot;');
         const localNoteTitle = localNote.title.replace(/"/g, '&quot;');
     
-        const htmlContents = await new Promise((res, rej) => {
-            this.fileSystem.readFile(this.joplinInstallDir + '/ui/DiffWindow/index.html', (err: Error, data: string) => {
-                if(err) {
-                    return rej(err);
-                }
-                res(data);
-            });
-        });
+        const htmlContents = await this.fileSystem.readFile(this.joplinInstallDir + '/ui/DiffWindow/index.html');
 
         // These inputs are a simple hack in order to pass data into the WebView.
         await this.joplinDialogs.setHtml(this.handle, `
