@@ -9,8 +9,15 @@ function log(message) {
     console.log(`Conflict Resolution Plugin: ` + message);
 }
 
-async function initCodeMirror() {
-    log('Initing codemirror instance...');
+async function initCodeMirror(curTimeout) {
+
+    // If CodeMirror hasn't loaded yet, restart the timer. The waiting time is increased exponentially.
+    if(CodeMirror == undefined) {
+        log('Codemirror has not loaded yet, waiting...');
+        setTimeout(initCodeMirror, curTimeout * 2, curTimeout * 2);
+    }
+
+    log('Initing codemirror instance.');
 
     // These scripts have to be loaded here in order to ensure Codemirror.js is already loaded by now.
     let script = document.createElement('script');
@@ -48,14 +55,10 @@ async function initCodeMirror() {
 
     document.getElementById("titleLeft").value = remoteTitle;
     document.getElementById("titleRight").value = curTitle;
+
+    log('CodeMirror Window loaded successfully.')
 }
 
 
-// see if DOM is already available
-if (document.readyState === "complete" || document.readyState === "interactive") {
-    // call on next available tick
-    // 1ms still didn't do the job. I had to make it 50ms
-    setTimeout(initCodeMirror, 50);
-} else {
-    document.addEventListener("DOMContentLoaded", initCodeMirror);
-}
+// A timeout to make sure CodeMirror is loaded.
+setTimeout(initCodeMirror, 50, 100);
