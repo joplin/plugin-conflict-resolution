@@ -12,9 +12,10 @@ function log(message) {
 async function initCodeMirror(curTimeout) {
 
     // If CodeMirror hasn't loaded yet, restart the timer. The waiting time is increased exponentially.
-    if(CodeMirror == undefined) {
+    if(typeof CodeMirror === 'undefined') {
         log('Codemirror has not loaded yet, waiting...');
         setTimeout(initCodeMirror, curTimeout * 2, curTimeout * 2);
+        return;
     }
 
     log('Initing codemirror instance.');
@@ -61,4 +62,4 @@ async function initCodeMirror(curTimeout) {
 
 
 // A timeout to make sure CodeMirror is loaded.
-setTimeout(initCodeMirror, 50, 100);
+setTimeout(initCodeMirror, 1, 5);
