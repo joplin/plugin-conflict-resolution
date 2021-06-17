@@ -81,7 +81,7 @@ export class DiffWindow {
             ${htmlContents}
         `);
     
-        let response = await this.dialogsApi.open(this.handle);
+        const response = await this.dialogsApi.open(this.handle);
         return response;
     }
 }
