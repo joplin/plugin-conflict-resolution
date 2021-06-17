@@ -3,30 +3,30 @@ import JoplinViewsDialogs from "api/JoplinViewsDialogs";
 
 export class DiffWindow {
     
-    private dialogsApi : JoplinViewsDialogs;
-    private dataApi : JoplinData;
-    private installDir : string;
-    private fileSys;
+    private joplinDialogs : JoplinViewsDialogs;
+    private joplinData : JoplinData;
+    private joplinInstallDir : string;
+    private fileSystem;
     
-    constructor(dilg : JoplinViewsDialogs, data : JoplinData, fileSys, installDir : string) {
-        this.dialogsApi = dilg;
-        this.dataApi = data;
-        this.installDir = installDir;
-        this.fileSys = fileSys;
+    constructor(joplinDialogs : JoplinViewsDialogs, joplinData : JoplinData, fileSystem, joplinInstallDir : string) {
+        this.joplinDialogs = joplinDialogs;
+        this.joplinData = joplinData;
+        this.joplinInstallDir = joplinInstallDir;
+        this.fileSystem = fileSystem;
     }
 
 
     private handle: string = "";
     
     public async Init(id : string) {
-        this.handle = await this.dialogsApi.create(id);
-		await this.dialogsApi.addScript(this.handle, './lib/codemirror/lib/codemirror.js');
-		await this.dialogsApi.addScript(this.handle, './lib/codemirror/lib/codemirror.css');
-		await this.dialogsApi.addScript(this.handle, './lib/diff_match_patch/diff_match_patch.js');
-		await this.dialogsApi.addScript(this.handle, './lib/codemirror/addon/merge/merge.css');
-		await this.dialogsApi.addScript(this.handle, './ui/DiffWindow/index.js');
-		await this.dialogsApi.addScript(this.handle, './ui/DiffWindow/index.css');
-		await this.dialogsApi.setButtons(this.handle, [
+        this.handle = await this.joplinDialogs.create(id);
+		await this.joplinDialogs.addScript(this.handle, './lib/codemirror/lib/codemirror.js');
+		await this.joplinDialogs.addScript(this.handle, './lib/codemirror/lib/codemirror.css');
+		await this.joplinDialogs.addScript(this.handle, './lib/diff_match_patch/diff_match_patch.js');
+		await this.joplinDialogs.addScript(this.handle, './lib/codemirror/addon/merge/merge.css');
+		await this.joplinDialogs.addScript(this.handle, './ui/DiffWindow/index.js');
+		await this.joplinDialogs.addScript(this.handle, './ui/DiffWindow/index.css');
+		await this.joplinDialogs.setButtons(this.handle, [
 			{
 				id: 'submit',
 				title: 'Save'
@@ -39,7 +39,7 @@ export class DiffWindow {
     }
 
     public async OpenWindow(noteId: string, compareWithId : string = "") {
-        const localNote = await this.dataApi.get(['notes', noteId], {
+        const localNote = await this.joplinData.get(['notes', noteId], {
             fields: ['is_conflict', 'conflict_original_id', 'body', 'title']
         });
     
@@ -53,7 +53,7 @@ export class DiffWindow {
     
         const remoteId = (compareWithId == "" ? localNote.conflict_original_id : compareWithId);
 
-        const remoteNote = await this.dataApi.get(['notes', remoteId], {
+        const remoteNote = await this.joplinData.get(['notes', remoteId], {
             fields: ['body', 'title']
         });
     
@@ -63,7 +63,7 @@ export class DiffWindow {
         const localNoteTitle = localNote.title.replace(/"/g, '&quot;');
     
         const htmlContents = await new Promise((res, rej) => {
-            this.fileSys.readFile(this.installDir + '/ui/DiffWindow/index.html', (err: Error, data: string) => {
+            this.fileSystem.readFile(this.joplinInstallDir + '/ui/DiffWindow/index.html', (err: Error, data: string) => {
                 if(err) {
                     return rej(err);
                 }
@@ -72,8 +72,8 @@ export class DiffWindow {
         });
 
         // These inputs are a simple hack in order to pass data into the WebView.
-        await this.dialogsApi.setHtml(this.handle, `
-            <input id="pluginInstallDir" type="hidden" value="${this.installDir}"/> 
+        await this.joplinDialogs.setHtml(this.handle, `
+            <input id="pluginInstallDir" type="hidden" value="${this.joplinInstallDir}"/> 
             <input id="remoteNote" type="hidden" value="${remoteNoteContent}"/> 
             <input id="curNote" type="hidden" value="${localNoteContent}"/> 
             <input id="remoteTitle" type="hidden" value="${remoteNoteTitle}"/> 
@@ -81,7 +81,7 @@ export class DiffWindow {
             ${htmlContents}
         `);
     
-        const response = await this.dialogsApi.open(this.handle);
+        const response = await this.joplinDialogs.open(this.handle);
         return response;
     }
 }
