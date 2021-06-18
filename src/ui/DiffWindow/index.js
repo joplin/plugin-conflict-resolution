@@ -1,20 +1,30 @@
 let installPath = document.getElementById("pluginInstallDir").value;
-let origNote = document.getElementById("origNote").value;
+let remoteNote = document.getElementById("remoteNote").value;
 let curNote = document.getElementById("curNote").value;
+let remoteTitle = document.getElementById("remoteTitle").value;
+let curTitle = document.getElementById("curTitle").value;
 let myCodeMirror = null;
 
 function log(message) {
     console.log(`Conflict Resolution Plugin: ` + message);
 }
 
-async function initCodeMirror() {
-    log('Initing codemirror instance...');
+async function initCodeMirror(curTimeout) {
+
+    // If CodeMirror hasn't loaded yet, restart the timer. The waiting time is increased exponentially.
+    if(typeof CodeMirror === 'undefined') {
+        log('Codemirror has not loaded yet, waiting...');
+        setTimeout(initCodeMirror, curTimeout * 2, curTimeout * 2);
+        return;
+    }
+
+    log('Initing codemirror instance.');
 
     // These scripts have to be loaded here in order to ensure Codemirror.js is already loaded by now.
     let script = document.createElement('script');
     let script2 = document.createElement('script');
-    script.src = installPath + '/UI/codemirror/mode/markdown/markdown.js';
-    script2.src = installPath + '/UI/codemirror/addon/merge/merge.js';
+    script.src = installPath + '/lib/codemirror/mode/markdown/markdown.js';
+    script2.src = installPath + '/lib/codemirror/addon/merge/merge.js';
 
     // This is needed because I have to wait for both the scripts to load before I do anything.
     let promises = [
@@ -36,15 +46,20 @@ async function initCodeMirror() {
     await Promise.all(promises);
     
     myCodeMirror = CodeMirror.MergeView(document.getElementById('conflictRes-Editor'), {
-        origLeft: origNote,
+        origLeft: remoteNote,
         mode: 'markdown',
         lineNumbers: true,
         connect: 'align',
         value: curNote,
         lineWrapping: true
     });
+
+    document.getElementById("titleLeft").value = remoteTitle;
+    document.getElementById("titleRight").value = curTitle;
+
+    log('CodeMirror Window loaded successfully.')
 }
 
-// TODO: find a better way to wait for document load.
-// simple window.onload didn't work.
-setTimeout(initCodeMirror, 100);
+
+// A timeout to make sure CodeMirror is loaded.
+setTimeout(initCodeMirror, 1, 5);
