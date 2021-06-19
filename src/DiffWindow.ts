@@ -1,5 +1,6 @@
 import JoplinData from "api/JoplinData";
 import JoplinViewsDialogs from "api/JoplinViewsDialogs";
+import { NoteSelectWindow } from "./NoteSelectWindow";
 
 export class DiffWindow {
     
@@ -7,7 +8,8 @@ export class DiffWindow {
     private joplinData : JoplinData;
     private joplinInstallDir : string;
     private fileSystem;
-    
+    private noteSelectWindow : NoteSelectWindow;
+
     constructor(joplinDialogs : JoplinViewsDialogs, joplinData : JoplinData, fileSystem, joplinInstallDir : string) {
         this.joplinDialogs = joplinDialogs;
         this.joplinData = joplinData;
@@ -36,6 +38,9 @@ export class DiffWindow {
 				title: 'Cancel'
 			}
 		]);
+
+        this.noteSelectWindow = new NoteSelectWindow(this.joplinDialogs, this.joplinData, this.fileSystem, this.joplinInstallDir);
+        await this.noteSelectWindow.init("dialog-note-select");
     }
 
     public async OpenWindow(noteId: string, compareWithId : string = "") {
@@ -47,8 +52,9 @@ export class DiffWindow {
             throw new Error('This is not a conflict note.');
         }
     
-        if(localNote.conflict_original_id.length === 0 && compareWithId == "") {
-            throw new Error('A note must be specificed to be compared with in case of missing original id.');
+        if(compareWithId == "") {
+            //throw new Error('A note must be specificed to be compared with in case of missing original id.');
+            return await this.noteSelectWindow.openDialog();
         }
     
         const remoteId = (compareWithId == "" ? localNote.conflict_original_id : compareWithId);

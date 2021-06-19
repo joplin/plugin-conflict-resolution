@@ -1,0 +1,10 @@
+body {
+    width: 500px;
+}
+
+#autoComplete_wrapper {
+    height: 500px;
+    /*display: block;
+    position: absolute;
+    z-index: 100;*/
+}
