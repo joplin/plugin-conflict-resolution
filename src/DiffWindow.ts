@@ -52,9 +52,8 @@ export class DiffWindow {
             throw new Error('This is not a conflict note.');
         }
     
-        if(compareWithId == "") {
-            //throw new Error('A note must be specificed to be compared with in case of missing original id.');
-            return await this.noteSelectWindow.openDialog();
+        if(localNote.conflict_original_id === "" && compareWithId === "") {
+            compareWithId = await this.noteSelectWindow.openDialog();
         }
     
         const remoteId = (compareWithId == "" ? localNote.conflict_original_id : compareWithId);

@@ -1,44 +1,30 @@
 setTimeout(init, 5, 10);
 
-function init(timeout) {
-    if(typeof autoComplete == 'undefined') {
-        console.log('Waiting for autocomplete plugin to load...');
-        return setTimeout(init, timeout * 2, timeout * 2);
-    }
-
+function init() {
     const notesList = JSON.parse(document.getElementById("notesList").value);
 
-    let keysList = [];
-    let notesFormated = [];
+    let notesObject = {};
 
     notesList.forEach(note => {
-        if(!keysList.includes(note.folderName))
-            keysList.push(note.folderName);
-        let tmpObject = {};
-        tmpObject[note.folderName] = note.title;
-        notesFormated.push(tmpObject);
+        if(notesObject[note.folderName] === undefined)
+            notesObject[note.folderName] = [];
+        notesObject[note.folderName].push({
+            id: note.id,
+            title: note.title == "" ? "Untitled" : note.title
+        });
     });
 
-    console.dir(keysList);
-    console.dir(notesFormated);
+    const selectItem = document.getElementById("noteSelect");
 
-    const autoCompleteJS = new autoComplete({
-        placeHolder: "Search for Food...",
-        data: {
-            src: notesFormated,
-            keys: keysList,
-            cache: true,
-        },
-        resultItem: {
-            highlight: true
-        },
-        events: {
-            input: {
-                selection: (event) => {
-                    const selection = event.detail.selection.value;
-                    autoCompleteJS.input.value = selection;
-                }
-            }
-        }
-    });
+    for(const folder in notesObject) {
+        const groupHtml = document.createElement("optgroup");
+        groupHtml.setAttribute("label", folder);
+        notesObject[folder].forEach(note => {
+            const noteHtml = document.createElement("option");
+            noteHtml.setAttribute("value", note.id);
+            noteHtml.innerText = note.title;
+            groupHtml.appendChild(noteHtml);
+        });
+        selectItem.appendChild(groupHtml);
+    }
 }

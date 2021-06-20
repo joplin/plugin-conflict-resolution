@@ -18,9 +18,7 @@ export class NoteSelectWindow {
 
     public async init(id : string) {
         this.handle = await this.joplinDialogs.create(id);
-        await this.joplinDialogs.addScript(this.handle, "./lib/autocomplete.js/autoComplete.js");
         await this.joplinDialogs.addScript(this.handle, "./ui/NoteSelectWindow/index.js");
-        await this.joplinDialogs.addScript(this.handle, "./lib/autocomplete.js/css/autoComplete.02.css");
         await this.joplinDialogs.addScript(this.handle, "./ui/NoteSelectWindow/index.css");
     }
 
@@ -35,17 +33,22 @@ export class NoteSelectWindow {
             ${htmlContents}
         `);
 
-        return this.joplinDialogs.open(this.handle);
+        const result = await this.joplinDialogs.open(this.handle);
+        if(result === undefined || result.formData === undefined || result.formData.noteSelectForm === undefined || result.formData.noteSelectForm.noteSelect)
+            throw new Error("No note was selected!");
+        
+        return result.formData.noteSelectForm.noteSelect;
     }
 
     private async getNotes() {
-        const notes = await this.joplinData.get(['notes'], { fields: ['parent_id', 'title'] });
+        const notes = await this.joplinData.get(['notes'], { fields: ['parent_id', 'title', 'id'] });
  
         // TODO: Handle the hasMore attribute!
         let notesList = [];
         for(const note of notes.items) {
             let curFolder = await this.joplinData.get(['folders', note.parent_id], { fields: ['title'] });
             notesList.push({
+                id: note.id,
                 title: note.title,
                 folderName: curFolder.title
             });
