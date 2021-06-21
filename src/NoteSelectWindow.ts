@@ -22,7 +22,7 @@ export class NoteSelectWindow {
         await this.joplinDialogs.addScript(this.handle, "./ui/NoteSelectWindow/index.css");
     }
 
-    public async openDialog() {
+    public async openDialog() : Promise<string> {
 
         const notesList = await this.getNotes();
         const escapedJSON = JSON.stringify(notesList).replace(/"/g, '&quot;');
@@ -34,7 +34,12 @@ export class NoteSelectWindow {
         `);
 
         const result = await this.joplinDialogs.open(this.handle);
-        if(result === undefined || result.formData === undefined || result.formData.noteSelectForm === undefined || result.formData.noteSelectForm.noteSelect)
+        
+        if(result.id !== 'ok') {
+            return "";
+        }
+
+        if(result === undefined || result.formData === undefined || result.formData.noteSelectForm === undefined || result.formData.noteSelectForm.noteSelect === undefined)
             throw new Error("No note was selected!");
         
         return result.formData.noteSelectForm.noteSelect;

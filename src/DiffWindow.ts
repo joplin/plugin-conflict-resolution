@@ -58,6 +58,10 @@ export class DiffWindow {
     
         const remoteId = (compareWithId == "" ? localNote.conflict_original_id : compareWithId);
 
+        if(remoteId == "") {
+            throw new Error("No note was found to compare to.");
+        }
+
         const remoteNote = await this.joplinData.get(['notes', remoteId], {
             fields: ['body', 'title']
         });
