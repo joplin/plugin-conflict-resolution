@@ -4,10 +4,14 @@ function init() {
     const notesList = JSON.parse(document.getElementById("notesList").value);
 
     let notesObject = {};
+    let orderedNotebooks = [];
 
     notesList.forEach(note => {
-        if(notesObject[note.folderName] === undefined)
+        if(notesObject[note.folderName] === undefined) {
             notesObject[note.folderName] = [];
+            orderedNotebooks.push(note.folderName);
+        }
+
         notesObject[note.folderName].push({
             id: note.id,
             title: note.title == "" ? "Untitled" : note.title
@@ -16,7 +20,7 @@ function init() {
 
     const selectItem = document.getElementById("noteSelect");
 
-    for(const folder in notesObject) {
+    for(const folder of orderedNotebooks) {
         const groupHtml = document.createElement("optgroup");
         groupHtml.setAttribute("label", folder);
         notesObject[folder].forEach(note => {

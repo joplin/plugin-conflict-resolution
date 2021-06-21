@@ -41,16 +41,27 @@ export class NoteSelectWindow {
     }
 
     private async getNotes() {
-        const notes = await this.joplinData.get(['notes'], { fields: ['parent_id', 'title', 'id'] });
+        const notes = await this.joplinData.get(['notes'], { fields: ['parent_id', 'title', 'id'], order_by: 'updated_time', order_dir: 'DESC' });
  
         // TODO: Handle the hasMore attribute!
+
         let notesList = [];
         for(const note of notes.items) {
-            let curFolder = await this.joplinData.get(['folders', note.parent_id], { fields: ['title'] });
+            
+            let currentParent = note.parent_id;
+            let curFolderTitle = "";
+            while(currentParent !== "") {
+                if(curFolderTitle !== "")
+                    curFolderTitle = " / " + curFolderTitle;
+                let curFolder = await this.joplinData.get(['folders', currentParent], { fields: ['title', 'parent_id'] });
+                curFolderTitle = curFolder.title + curFolderTitle;
+                currentParent = curFolder.parent_id;
+            }
+            
             notesList.push({
                 id: note.id,
                 title: note.title,
-                folderName: curFolder.title
+                folderName: curFolderTitle
             });
         }
 
