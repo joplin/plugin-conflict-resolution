@@ -45,7 +45,7 @@ export class NoteSelectWindow {
         return result.formData.noteSelectForm.noteSelect;
     }
 
-    private async getNotes() {
+    public async getNotes() {
         const notes = [];
         
         let notesRespone = await this.joplinData.get(['notes'], { fields: ['parent_id', 'title', 'id'], order_by: 'updated_time', order_dir: 'DESC' });
