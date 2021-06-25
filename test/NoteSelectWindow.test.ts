@@ -1,21 +1,30 @@
-import JoplinData from "api/JoplinData";
-import { NoteSelectWindow } from "src/NoteSelectWindow";
-
-jest.mock("./../api/JoplinViewsDialogs.d.ts");
 const JoplinViewsDialogs = require("./../api/JoplinViewsDialogs.d.ts");
+import { NoteSelectWindow } from "../src/NoteSelectWindow";
 
-/*JoplinViewsDialogs.mockImplementation(() => {
-    return {
-        create: jest.fn(),
-        showMessageBox: jest.fn(),
-        setHtml: jest.fn(),
-        addScript: jest.fn(),
-        setButtons: jest.fn(),
-        open: jest.fn()
-    };
-});*/
+/* JOPLIN API MOCK */
+const mockedDialogApi = {
+    create: jest.fn().mockResolvedValue("testId"),
+    addScript: jest.fn()
+}
+jest.mock("./../api/JoplinViewsDialogs.d.ts", () => {
+    return jest.fn().mockImplementation(() => {
+        return {
+            create: mockedDialogApi.create,
+            addScript: mockedDialogApi.addScript
+        };
+    });
+});
 
-test("Should open a select window", () => {
-    let dialogsApi = new JoplinViewsDialogs();
-    //let wind = new NoteSelectWindow(dialogsApi, JoplinData, fs, "");
+
+
+describe('NoteSelectWindow', () => {
+    
+    const mockedJoplinDialogs = new JoplinViewsDialogs();
+
+    it("dfdf", async () => {
+        
+        let dlg = new NoteSelectWindow(mockedJoplinDialogs, null, null, "");
+        await dlg.init("sdfsdf");
+        expect(mockedDialogApi.create).toBeCalledWith("sdfsdf");
+    });
 });
