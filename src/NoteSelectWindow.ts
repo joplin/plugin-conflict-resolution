@@ -46,12 +46,18 @@ export class NoteSelectWindow {
     }
 
     private async getNotes() {
-        const notes = await this.joplinData.get(['notes'], { fields: ['parent_id', 'title', 'id'], order_by: 'updated_time', order_dir: 'DESC' });
- 
-        // TODO: Handle the hasMore attribute!
+        const notes = [];
+        
+        let notesRespone = await this.joplinData.get(['notes'], { fields: ['parent_id', 'title', 'id'], order_by: 'updated_time', order_dir: 'DESC' });
+        notes.push(...notesRespone.items);
+        let curPage = 1;
+        while(notesRespone.has_more === true) {
+            notesRespone = await this.joplinData.get(['notes'], { fields: ['parent_id', 'title', 'id'], order_by: 'updated_time', order_dir: 'DESC', page: (++curPage) });
+            notes.push(...notesRespone.items);
+        }
 
         let notesList = [];
-        for(const note of notes.items) {
+        for(const note of notes) {
             
             let currentParent = note.parent_id;
             let curFolderTitle = "";
