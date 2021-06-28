@@ -11,11 +11,11 @@ async function openDiffWindow(noteIds : string[]) {
 	}
 	const noteId = noteIds[0];
 
-	//try {
+	try {
 		await diffWindow.OpenWindow(noteId);
-	//} catch(ex) {
-	//	joplin.views.dialogs.showMessageBox(ex.message);
-	//}
+	} catch(ex) {
+		joplin.views.dialogs.showMessageBox(ex.message);
+	}
 }
 
 joplin.plugins.register({
