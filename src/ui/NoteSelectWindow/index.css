@@ -1,0 +1,8 @@
+body {
+    width: 500px;
+}
+
+#noteSelect {
+    width: 100%;
+    font-size: medium;
+}

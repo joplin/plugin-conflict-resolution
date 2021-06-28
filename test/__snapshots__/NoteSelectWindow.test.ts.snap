@@ -1,0 +1,85 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NoteSelectWindow should raise an error when response doesn't have any note selected: noNoteSelectedError 1`] = `[Error: No note was selected!]`;
+
+exports[`NoteSelectWindow should test get notes function: getNotesSnapshot 1`] = `
+Array [
+  Object {
+    "folderName": "Test Folder 1",
+    "id": "f78f5b7f72634a1190af2f17b1e8d96c",
+    "title": "g",
+  },
+  Object {
+    "folderName": "Test Folder 1",
+    "id": "c4e21d6016584e27b3f30831994a2a6b",
+    "title": "",
+  },
+  Object {
+    "folderName": "Test Folder 1",
+    "id": "15f338dc3664487189fee5af0750d0d1",
+    "title": "dg",
+  },
+  Object {
+    "folderName": "Test Folder 1",
+    "id": "b0f025664fa84645a3eaccb99209e0b8",
+    "title": "Ahmed",
+  },
+  Object {
+    "folderName": "Test Folder 1 / Test Folder 2 / Test Folder 3",
+    "id": "a5548d09595b4baea839cd7d40ee4aa1",
+    "title": "Gasser Note",
+  },
+  Object {
+    "folderName": "Test Folder 1 / Test Folder 2 / Test Folder 3",
+    "id": "8dc676bddd2b43cbbab197e426722ad9",
+    "title": "Anas Note",
+  },
+  Object {
+    "folderName": "Test Folder 4",
+    "id": "bd1a227764a944bab6eff29eb116e6a8",
+    "title": "Conflict resolution plugin",
+  },
+  Object {
+    "folderName": "Test Folder 4",
+    "id": "6d8c895238114637b63ed54149a4dd84",
+    "title": "Conflict resolution plugin",
+  },
+  Object {
+    "folderName": "Test Folder 1 / Test Folder 2 / Test Folder 3",
+    "id": "7fd64520f20548fb94356b032751e72f",
+    "title": "Ahmed Note",
+  },
+  Object {
+    "folderName": "Test Folder 4",
+    "id": "73e8d938c4d84951915278a54e0eacaf",
+    "title": "Test text is here.",
+  },
+  Object {
+    "folderName": "Test Folder 4",
+    "id": "4cac336dc7ce4e449442ed535b93b085",
+    "title": "",
+  },
+  Object {
+    "folderName": "Test Folder 4",
+    "id": "2432b08c86b84fd9983bee4c42699ca8",
+    "title": "sdfsd",
+  },
+  Object {
+    "folderName": "Test Folder 4",
+    "id": "9ad879e68da34a5c8420f45e77c096b6",
+    "title": "dfgdg",
+  },
+  Object {
+    "folderName": "Test Folder 4",
+    "id": "945d9edeba9a48ba90958af0f3c4c66b",
+    "title": "dsfsdf",
+  },
+]
+`;
+
+exports[`NoteSelectWindow should test the dialog having correct html: setHtmlFirstSnapshot 1`] = `
+"
+            <input id=\\"notesList\\" type=\\"hidden\\" value=\\"[{&quot;id&quot;:&quot;f78f5b7f72634a1190af2f17b1e8d96c&quot;,&quot;title&quot;:&quot;g&quot;,&quot;folderName&quot;:&quot;Test Folder 1&quot;},{&quot;id&quot;:&quot;c4e21d6016584e27b3f30831994a2a6b&quot;,&quot;title&quot;:&quot;&quot;,&quot;folderName&quot;:&quot;Test Folder 1&quot;},{&quot;id&quot;:&quot;15f338dc3664487189fee5af0750d0d1&quot;,&quot;title&quot;:&quot;dg&quot;,&quot;folderName&quot;:&quot;Test Folder 1&quot;},{&quot;id&quot;:&quot;b0f025664fa84645a3eaccb99209e0b8&quot;,&quot;title&quot;:&quot;Ahmed&quot;,&quot;folderName&quot;:&quot;Test Folder 1&quot;},{&quot;id&quot;:&quot;a5548d09595b4baea839cd7d40ee4aa1&quot;,&quot;title&quot;:&quot;Gasser Note&quot;,&quot;folderName&quot;:&quot;Test Folder 1 / Test Folder 2 / Test Folder 3&quot;},{&quot;id&quot;:&quot;8dc676bddd2b43cbbab197e426722ad9&quot;,&quot;title&quot;:&quot;Anas Note&quot;,&quot;folderName&quot;:&quot;Test Folder 1 / Test Folder 2 / Test Folder 3&quot;},{&quot;id&quot;:&quot;bd1a227764a944bab6eff29eb116e6a8&quot;,&quot;title&quot;:&quot;Conflict resolution plugin&quot;,&quot;folderName&quot;:&quot;Test Folder 4&quot;},{&quot;id&quot;:&quot;6d8c895238114637b63ed54149a4dd84&quot;,&quot;title&quot;:&quot;Conflict resolution plugin&quot;,&quot;folderName&quot;:&quot;Test Folder 4&quot;},{&quot;id&quot;:&quot;7fd64520f20548fb94356b032751e72f&quot;,&quot;title&quot;:&quot;Ahmed Note&quot;,&quot;folderName&quot;:&quot;Test Folder 1 / Test Folder 2 / Test Folder 3&quot;},{&quot;id&quot;:&quot;73e8d938c4d84951915278a54e0eacaf&quot;,&quot;title&quot;:&quot;Test text is here.&quot;,&quot;folderName&quot;:&quot;Test Folder 4&quot;},{&quot;id&quot;:&quot;4cac336dc7ce4e449442ed535b93b085&quot;,&quot;title&quot;:&quot;&quot;,&quot;folderName&quot;:&quot;Test Folder 4&quot;},{&quot;id&quot;:&quot;2432b08c86b84fd9983bee4c42699ca8&quot;,&quot;title&quot;:&quot;sdfsd&quot;,&quot;folderName&quot;:&quot;Test Folder 4&quot;},{&quot;id&quot;:&quot;9ad879e68da34a5c8420f45e77c096b6&quot;,&quot;title&quot;:&quot;dfgdg&quot;,&quot;folderName&quot;:&quot;Test Folder 4&quot;},{&quot;id&quot;:&quot;945d9edeba9a48ba90958af0f3c4c66b&quot;,&quot;title&quot;:&quot;dsfsdf&quot;,&quot;folderName&quot;:&quot;Test Folder 4&quot;}]\\" />
+            <form></form>
+        "
+`;
