@@ -59,7 +59,8 @@ export class DiffWindow {
         const remoteId = (compareWithId == "" ? localNote.conflict_original_id : compareWithId);
 
         if(remoteId == "") {
-            throw new Error("No note was found to compare to.");
+            // No note was found to compare to and user didn't select a note. Cancel button must have been pressed.
+            return;
         }
 
         const remoteNote = await this.joplinData.get(['notes', remoteId], {
