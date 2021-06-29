@@ -1,3 +1,4 @@
+import {encode} from 'html-entities';
 import JoplinData from "api/JoplinData";
 import JoplinViewsDialogs from "api/JoplinViewsDialogs";
 import { NoteSelectWindow } from "./NoteSelectWindow";
@@ -67,10 +68,10 @@ export class DiffWindow {
             fields: ['body', 'title']
         });
     
-        const remoteNoteContent = remoteNote.body.replace(/"/g, '&quot;');
-        const localNoteContent = localNote.body.replace(/"/g, '&quot;');
-        const remoteNoteTitle = remoteNote.title.replace(/"/g, '&quot;');
-        const localNoteTitle = localNote.title.replace(/"/g, '&quot;');
+        const remoteNoteContent = encode(remoteNote.body);
+        const localNoteContent = encode(localNote.body);
+        const remoteNoteTitle = encode(remoteNote.title);
+        const localNoteTitle = encode(localNote.title);
     
         const htmlContents = await this.fileSystem.readFile(this.joplinInstallDir + '/ui/DiffWindow/index.html');
 

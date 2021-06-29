@@ -1,3 +1,4 @@
+import {encode} from 'html-entities';
 import JoplinData from "api/JoplinData";
 import JoplinViewsDialogs from "api/JoplinViewsDialogs";
 
@@ -25,7 +26,7 @@ export class NoteSelectWindow {
     public async openDialog() : Promise<string> {
 
         const notesList = await this.getNotes();
-        const escapedJSON = JSON.stringify(notesList).replace(/"/g, '&quot;');
+        const escapedJSON = encode(JSON.stringify(notesList));
 
         const htmlContents = await this.fileSystem.readFile(this.joplinInstallDir + "/ui/NoteSelectWindow/index.html");
         await this.joplinDialogs.setHtml(this.handle, `
