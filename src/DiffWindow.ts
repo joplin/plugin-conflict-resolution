@@ -86,6 +86,7 @@ export class DiffWindow {
         `);
     
         const response = await this.joplinDialogs.open(this.handle);
+        await this.joplinDialogs.showMessageBox(JSON.stringify(response));
         return response;
     }
 }
