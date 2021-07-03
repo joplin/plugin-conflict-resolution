@@ -1,7 +1,6 @@
 import {encode} from 'html-entities';
 import JoplinData from "api/JoplinData";
 import JoplinViewsDialogs from "api/JoplinViewsDialogs";
-import { NoteSelectWindow } from "./NoteSelectWindow";
 
 export class DiffWindow {
     
@@ -9,7 +8,6 @@ export class DiffWindow {
     private joplinData : JoplinData;
     private joplinInstallDir : string;
     private fileSystem;
-    private noteSelectWindow : NoteSelectWindow;
 
     constructor(joplinDialogs : JoplinViewsDialogs, joplinData : JoplinData, fileSystem, joplinInstallDir : string) {
         this.joplinDialogs = joplinDialogs;
@@ -39,32 +37,21 @@ export class DiffWindow {
 				title: 'Cancel'
 			}
 		]);
-
-        this.noteSelectWindow = new NoteSelectWindow(this.joplinDialogs, this.joplinData, this.fileSystem, this.joplinInstallDir);
-        await this.noteSelectWindow.init("dialog-note-select");
     }
 
-    public async OpenWindow(noteId: string, compareWithId : string = "") {
+    /**
+     * Opens the diff window between 2 different notes and returns the merged result as a string.
+     * 
+     * @param noteId The ID of the base note which will be saved eventually.
+     * @param compareWithId The ID of the note that we should compare to.
+     * @returns `null` if the merge was cancelled. Otherwise, the contents of the merged notes. 
+     */
+    public async OpenWindow(noteId: string, compareWithId : string) : Promise<string> {
         const localNote = await this.joplinData.get(['notes', noteId], {
-            fields: ['is_conflict', 'conflict_original_id', 'body', 'title']
+            fields: ['body', 'title']
         });
-    
-        if(localNote.is_conflict === 0) {
-            throw new Error('This is not a conflict note.');
-        }
-    
-        if(localNote.conflict_original_id === "" && compareWithId === "") {
-            compareWithId = await this.noteSelectWindow.openDialog();
-        }
-    
-        const remoteId = (compareWithId == "" ? localNote.conflict_original_id : compareWithId);
 
-        if(remoteId == "") {
-            // No note was found to compare to and user didn't select a note. Cancel button must have been pressed.
-            return;
-        }
-
-        const remoteNote = await this.joplinData.get(['notes', remoteId], {
+        const remoteNote = await this.joplinData.get(['notes', compareWithId], {
             fields: ['body', 'title']
         });
     
@@ -86,7 +73,9 @@ export class DiffWindow {
         `);
     
         const response = await this.joplinDialogs.open(this.handle);
-        await this.joplinDialogs.showMessageBox(JSON.stringify(response));
-        return response;
+        if(response.id == "submit" && response.formData && response.formData.note && response.formData.note.noteContents) {
+            return response.formData.note.noteContents;
+        }
+        return null;
     }
 }
