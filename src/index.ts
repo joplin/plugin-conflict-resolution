@@ -1,18 +1,45 @@
 import joplin from 'api';
 import { MenuItemLocation } from 'api/types';
 import { DiffWindow } from './DiffWindow';
+import { NoteSelectWindow } from './NoteSelectWindow';
 
-let diffWindow;
+let diffWindow : DiffWindow;
+let noteSelectWindow : NoteSelectWindow;
 
 async function openDiffWindow(noteIds : string[]) {
 	if(noteIds.length !== 1) {
 		// Comparing multiple notes not yet supported.
 		return;
 	}
+
 	const noteId = noteIds[0];
+	const localNote = await joplin.data.get(['notes', noteId], {
+		fields: ['is_conflict', 'conflict_original_id']
+	});
+
+	if(localNote.is_conflict === 0) {
+		return await joplin.views.dialogs.showMessageBox("This is not a conflict note.");
+	}
+
+	let compareWithId = localNote.conflict_original_id;
+	if(compareWithId === "") {
+		compareWithId = await noteSelectWindow.openDialog();
+	}
+
+	if(compareWithId == "") {
+		// No note was found to compare to and user didn't select a note. Cancel button must have been pressed.
+		return;
+	}
 
 	try {
-		await diffWindow.OpenWindow(noteId);
+		const resp = await diffWindow.OpenWindow(noteId, compareWithId);
+		if(resp === null) {
+			// If it's null, the Cancel button was pressed.
+			return;
+		}
+
+		await joplin.views.dialogs.showMessageBox(resp);
+
 	} catch(ex) {
 		joplin.views.dialogs.showMessageBox(ex.message);
 	}
@@ -22,8 +49,10 @@ joplin.plugins.register({
 	onStart: async function() {
 
 		diffWindow = new DiffWindow(joplin.views.dialogs, joplin.data, joplin.require('fs-extra'), await joplin.plugins.installationDir());
-
 		await diffWindow.Init("conflictResolution-dialog");
+
+		noteSelectWindow = new NoteSelectWindow(joplin.views.dialogs, joplin.data, joplin.require('fs-extra'), await joplin.plugins.installationDir());
+        await noteSelectWindow.init("dialog-note-select");
 
 		await joplin.commands.register({
 			name: 'resolveConflictsCommand',
