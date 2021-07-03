@@ -54,9 +54,9 @@ async function initCodeMirror(curTimeout) {
         lineWrapping: true
     });
 
-    window.addEventListener("click", () => {
-        // This will sync CodeMirrors current text to the input field on submission of the dialog.
-        console.log('IN EVENT ******* VALUE: ' + myCodeMirror.editor().getDoc().getValue());
+    document.getElementById("noteContents").value = curNote;
+    myCodeMirror.editor().on("changes", () => {
+        // Keep the noteContents input in sync with CodeMirror value.
         document.getElementById("noteContents").value = myCodeMirror.editor().getDoc().getValue();
     });
 
