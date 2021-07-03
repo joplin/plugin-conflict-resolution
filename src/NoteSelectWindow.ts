@@ -23,6 +23,10 @@ export class NoteSelectWindow {
         await this.joplinDialogs.addScript(this.handle, "./ui/NoteSelectWindow/index.css");
     }
 
+    /**
+     * Shows a window to select a note from all notes in all notebooks.
+     * @returns the id of the selected note. Will raise an error if none was selected.
+     */
     public async openDialog() : Promise<string> {
 
         const notesList = await this.getNotes();
