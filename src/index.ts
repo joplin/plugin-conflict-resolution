@@ -38,7 +38,16 @@ async function openDiffWindow(noteIds : string[]) {
 			return;
 		}
 
-		await joplin.views.dialogs.showMessageBox(resp);
+		// The note in the normal folder is actually the note that came from the remote server, AKA the one in compareWithId.
+		// So, we must replace the contents of that note. The note at `noteId` exists in conflicts folder and will be removed.
+		await joplin.data.put(['notes', compareWithId], null, {
+			body: resp.NoteContents,
+			title: resp.NoteTitle
+		});
+
+		await joplin.data.delete(['notes', noteId]);
+
+		await joplin.views.dialogs.showMessageBox("Successfully resolved conflict!");
 
 	} catch(ex) {
 		joplin.views.dialogs.showMessageBox(ex.message);
