@@ -54,10 +54,18 @@ async function initCodeMirror(curTimeout) {
         lineWrapping: true
     });
 
-    document.getElementById("noteContents").value = curNote;
+    const newNoteContents = document.getElementById("newNoteContents");
+    const newNoteTitle = document.getElementById("newNoteTitle");
+
+    newNoteContents.value = curNote;
     myCodeMirror.editor().on("changes", () => {
         // Keep the noteContents input in sync with CodeMirror value.
-        document.getElementById("noteContents").value = myCodeMirror.editor().getDoc().getValue();
+        newNoteContents.value = myCodeMirror.editor().getDoc().getValue();
+    });
+
+    document.getElementById("titleRight").addEventListener('change', () => {
+        // Same for the title as above. Keep it in sync.
+        newNoteTitle.value = document.getElementById("titleRight").value;
     });
 
     document.getElementById("titleLeft").value = remoteTitle;

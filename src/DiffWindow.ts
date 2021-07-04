@@ -3,7 +3,7 @@ import JoplinData from "api/JoplinData";
 import JoplinViewsDialogs from "api/JoplinViewsDialogs";
 
 export class DiffWindow {
-    
+
     private joplinDialogs : JoplinViewsDialogs;
     private joplinData : JoplinData;
     private joplinInstallDir : string;
@@ -46,7 +46,7 @@ export class DiffWindow {
      * @param compareWithId The ID of the note that we should compare to.
      * @returns `null` if the merge was cancelled. Otherwise, the contents of the merged notes. 
      */
-    public async OpenWindow(noteId: string, compareWithId : string) : Promise<string> {
+    public async OpenWindow(noteId: string, compareWithId : string) : Promise<DiffResult> {
         const localNote = await this.joplinData.get(['notes', noteId], {
             fields: ['body', 'title']
         });
@@ -73,9 +73,17 @@ export class DiffWindow {
         `);
     
         const response = await this.joplinDialogs.open(this.handle);
-        if(response.id == "submit" && response.formData && response.formData.note && response.formData.note.noteContents) {
-            return response.formData.note.noteContents;
+        if(response.id == "submit" && response.formData && response.formData.note && response.formData.note.newNoteContents && response.formData.note.newNoteTitle) {
+            return {
+                NoteContents: response.formData.note.newNoteContents,
+                NoteTitle: response.formData.note.newNoteTitle
+            };
         }
         return null;
     }
+}
+
+export type DiffResult {
+    NoteContents : string;
+    NoteTitle: string;
 }
