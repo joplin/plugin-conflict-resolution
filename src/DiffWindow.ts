@@ -83,7 +83,7 @@ export class DiffWindow {
     }
 }
 
-export type DiffResult {
+export type DiffResult = {
     NoteContents : string;
     NoteTitle: string;
 }
