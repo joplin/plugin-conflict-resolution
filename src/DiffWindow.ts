@@ -57,9 +57,9 @@ export class DiffWindow {
      *
      * @param {string} noteId The ID of the base note which will be saved eventually.
      * @param {string} compareWithId The ID of the note that we should compare to.
-     * @return {DiffResult} `null` if the merge was cancelled. Otherwise, the contents of the merged notes.
+     * @return {DiffResult | null} `null` if the merge was cancelled. Otherwise, the contents of the merged notes.
      */
-    public async openWindow(noteId: string, compareWithId : string) : Promise<DiffResult> {
+    public async openWindow(noteId: string, compareWithId : string) : Promise<DiffResult | null> {
         const localNote = await this.joplinData.get(['notes', noteId], {
             fields: ['body', 'title'],
         });
