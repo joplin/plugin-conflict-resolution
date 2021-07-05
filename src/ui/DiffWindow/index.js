@@ -1,8 +1,8 @@
-let installPath = document.getElementById("pluginInstallDir").value;
-let remoteNote = document.getElementById("remoteNote").value;
-let curNote = document.getElementById("curNote").value;
-let remoteTitle = document.getElementById("remoteTitle").value;
-let curTitle = document.getElementById("curTitle").value;
+const installPath = document.getElementById('pluginInstallDir').value;
+const remoteNote = document.getElementById('remoteNote').value;
+const curNote = document.getElementById('curNote').value;
+const remoteTitle = document.getElementById('remoteTitle').value;
+const curTitle = document.getElementById('curTitle').value;
 let myCodeMirror = null;
 
 function log(message) {
@@ -10,9 +10,8 @@ function log(message) {
 }
 
 async function initCodeMirror(curTimeout) {
-
     // If CodeMirror hasn't loaded yet, restart the timer. The waiting time is increased exponentially.
-    if(typeof CodeMirror === 'undefined') {
+    if (typeof CodeMirror === 'undefined') {
         log('Codemirror has not loaded yet, waiting...');
         setTimeout(initCodeMirror, curTimeout * 2, curTimeout * 2);
         return;
@@ -21,43 +20,60 @@ async function initCodeMirror(curTimeout) {
     log('Initing codemirror instance.');
 
     // These scripts have to be loaded here in order to ensure Codemirror.js is already loaded by now.
-    let script = document.createElement('script');
-    let script2 = document.createElement('script');
+    const script = document.createElement('script');
+    const script2 = document.createElement('script');
     script.src = installPath + '/lib/codemirror/mode/markdown/markdown.js';
     script2.src = installPath + '/lib/codemirror/addon/merge/merge.js';
 
     // This is needed because I have to wait for both the scripts to load before I do anything.
-    let promises = [
+    const promises = [
         new Promise((res) => {
-            script.onload = function () {
+            script.onload = function() {
                 res();
-            }
+            };
         }),
         new Promise((res) => {
-            script2.onload = function () {
+            script2.onload = function() {
                 res();
-            }
-        })
+            };
+        }),
     ];
 
     document.head.appendChild(script);
     document.head.appendChild(script2);
 
     await Promise.all(promises);
-    
+
+    // eslint-disable-next-line new-cap
     myCodeMirror = CodeMirror.MergeView(document.getElementById('conflictRes-Editor'), {
         origLeft: remoteNote,
         mode: 'markdown',
         lineNumbers: true,
         connect: 'align',
         value: curNote,
-        lineWrapping: true
+        lineWrapping: true,
     });
 
-    document.getElementById("titleLeft").value = remoteTitle;
-    document.getElementById("titleRight").value = curTitle;
+    document.getElementById('titleLeft').value = remoteTitle;
+    document.getElementById('titleRight').value = curTitle;
 
-    log('CodeMirror Window loaded successfully.')
+    const newNoteContents = document.getElementById('newNoteContents');
+    const newNoteTitle = document.getElementById('newNoteTitle');
+
+    newNoteContents.value = curNote;
+    myCodeMirror.editor().on('changes', () => {
+    // Keep the noteContents input in sync with CodeMirror value.
+        newNoteContents.value = myCodeMirror.editor().getDoc().getValue();
+    });
+
+    newNoteTitle.value = document.getElementById('titleRight').value;
+    document.getElementById('titleRight').addEventListener('change', () => {
+    // Same for the title as above. Keep it in sync.
+        newNoteTitle.value = document.getElementById('titleRight').value;
+    });
+
+
+    log('CodeMirror Window loaded successfully.');
 }
 
 
