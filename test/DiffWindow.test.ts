@@ -72,27 +72,7 @@ describe('DiffWindow', () => {
         jest.clearAllMocks();
     });
 
-    it('should setup the dialog properly', async () => {
-        const dlg = new DiffWindow(mockedJoplinDialogs, mockedJoplinData, fs, 'D:');
-
-        await dlg.init('abc123');
-        expect(mockedDialogApi.create).toBeCalledWith('abc123');
-        expect(mockedDialogApi.addScript).toBeCalledTimes(6);
-        expect(mockedDialogApi.addScript.mock.calls).toMatchSnapshot('addScriptCalls');
-        expect(mockedDialogApi.setButtons).toBeCalled();
-        expect(mockedDialogApi.setButtons).toBeCalledWith('test-dialog-id', [
-            {
-                id: 'submit',
-                title: 'Save',
-            },
-            {
-                id: 'cancel',
-                title: 'Cancel',
-            },
-        ]);
-    });
-
-    it('should test the dialog having correct html', async () => {
+    it('check having correct html and that all inputs have correct values', async () => {
         const dlg = new DiffWindow(mockedJoplinDialogs, mockedJoplinData, fs, 'D:');
         dlg.init('abc123');
 
@@ -102,7 +82,7 @@ describe('DiffWindow', () => {
         expect(mockedDialogApi.setHtml.mock.calls[0]).toMatchSnapshot('dialogHtml');
     });
 
-    it('should test ok result', async () => {
+    it('should return final content and title on pressing ok', async () => {
         const dlg = new DiffWindow(mockedJoplinDialogs, mockedJoplinData, fs, 'D:');
         dlg.init('abc123');
         const res = await dlg.openWindow('8c0d6c64f37f409ba4edf517bab861b5', '673f0783febc4ead8187727781ab3b32');
@@ -112,7 +92,7 @@ describe('DiffWindow', () => {
         });
     });
 
-    it('should test clicking cancel', async () => {
+    it('should return null when pressing cancel', async () => {
         const dlg = new DiffWindow(mockedJoplinDialogs, mockedJoplinData, fs, 'D:');
         dlg.init('abc123');
         mockedDialogApi.open.mockResolvedValueOnce({

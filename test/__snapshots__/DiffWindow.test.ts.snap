@@ -1,35 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DiffWindow should setup the dialog properly: addScriptCalls 1`] = `
-Array [
-  Array [
-    "test-dialog-id",
-    "./lib/codemirror/lib/codemirror.js",
-  ],
-  Array [
-    "test-dialog-id",
-    "./lib/codemirror/lib/codemirror.css",
-  ],
-  Array [
-    "test-dialog-id",
-    "./lib/diff_match_patch/diff_match_patch.js",
-  ],
-  Array [
-    "test-dialog-id",
-    "./lib/codemirror/addon/merge/merge.css",
-  ],
-  Array [
-    "test-dialog-id",
-    "./ui/DiffWindow/index.js",
-  ],
-  Array [
-    "test-dialog-id",
-    "./ui/DiffWindow/index.css",
-  ],
-]
-`;
-
-exports[`DiffWindow should test the dialog having correct html: dialogHtml 1`] = `
+exports[`DiffWindow check having correct html and that all inputs have correct values: dialogHtml 1`] = `
 Array [
   "test-dialog-id",
   "
