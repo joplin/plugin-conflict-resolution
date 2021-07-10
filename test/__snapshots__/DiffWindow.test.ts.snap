@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DiffWindow check having correct html and that all inputs have correct values: dialogHtml 1`] = `
+Array [
+  "test-dialog-id",
+  "
+            <input id=\\"pluginInstallDir\\" type=\\"hidden\\" value=\\"D:\\"/> 
+            <input id=\\"remoteNote\\" type=\\"hidden\\" value=\\"Test Content 2\\"/> 
+            <input id=\\"curNote\\" type=\\"hidden\\" value=\\"Test Content\\"/> 
+            <input id=\\"remoteTitle\\" type=\\"hidden\\" value=\\"Test Title 2\\"/> 
+            <input id=\\"curTitle\\" type=\\"hidden\\" value=\\"Test Title\\"/> 
+            <form></form>
+        ",
+]
+`;
