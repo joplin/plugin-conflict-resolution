@@ -21,3 +21,11 @@ body {
     padding: 5px;
     width: 98%;
 }
+
+#dialogHint {
+    font-size: medium;
+}
+
+#moveTitleButton {
+    font-size: large;
+}

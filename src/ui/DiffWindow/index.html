@@ -1,10 +1,11 @@
 <div id="titlesBar">
     <div class="titleInput" id="titleDivLeft">
-        <h1>Remote Note</h1>
+        <h1>Conflict Note</h1>
         <input disabled id="titleLeft" value="First Title"/>
     </div>
+    <button id="moveTitleButton">-></button>
     <div class="titleInput" id="titleDivRight">
-        <h1>Local Note</h1>
+        <h1>Resolved Note</h1>
         <input id="titleRight" value="Second Title"/>
     </div>
 </div>
@@ -13,3 +14,4 @@
     <input type="hidden" name="newNoteContents" id="newNoteContents" value=""/>
 </form>
 <div id="conflictRes-Editor"></div>
+<p id="dialogHint">Please review both notes and make the appropriate corrections in the Resolved Note. <strong>The Resolved Note is the one that will be saved.</strong></p>
