@@ -57,21 +57,32 @@ async function initCodeMirror(curTimeout) {
     document.getElementById('titleLeft').value = remoteTitle;
     document.getElementById('titleRight').value = curTitle;
 
+    if (document.getElementById('titleRight').value === document.getElementById('titleLeft').value) {
+        document.getElementById('moveTitleButton').setAttribute('disabled', true);
+    } else {
+        document.getElementById('moveTitleButton').removeAttribute('disabled');
+    }
+
     const newNoteContents = document.getElementById('newNoteContents');
     const newNoteTitle = document.getElementById('newNoteTitle');
 
     newNoteContents.value = curNote;
     myCodeMirror.editor().on('changes', () => {
-    // Keep the noteContents input in sync with CodeMirror value.
+        // Keep the noteContents input in sync with CodeMirror value.
         newNoteContents.value = myCodeMirror.editor().getDoc().getValue();
     });
 
     newNoteTitle.value = document.getElementById('titleRight').value;
-    document.getElementById('titleRight').addEventListener('change', () => {
-    // Same for the title as above. Keep it in sync.
+    document.getElementById('titleRight').addEventListener('input', () => {
+        // Same for the title as above. Keep it in sync.
         newNoteTitle.value = document.getElementById('titleRight').value;
+        document.getElementById('moveTitleButton').removeAttribute('disabled');
     });
 
+    document.getElementById('moveTitleButton').addEventListener('click', (ev) => {
+        document.getElementById('titleRight').value = document.getElementById('titleLeft').value;
+        document.getElementById('moveTitleButton').setAttribute('disabled', true);
+    });
 
     log('CodeMirror Window loaded successfully.');
 }
