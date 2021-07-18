@@ -3,6 +3,10 @@ body {
     height: 800px;
 }
 
+h1 {
+    margin: 0;
+}
+
 #titlesBar {
     display: flex;
     margin-bottom: 5px;
@@ -12,12 +16,30 @@ body {
     width: 100%;
 }
 
-#titleDivLeft {
-    margin-right: 80px;
-}
-
 #titleLeft, #titleRight {
     font-size: large;
     padding: 5px;
     width: 98%;
+}
+
+#dialogTitle {
+    font-size: 40px;
+    text-align: center;
+}
+
+#dialogSubtitle {
+    font-size: medium;
+}
+
+#moveTitleButton {
+    font-size: large;
+    width: 70px;
+    height: 35px;
+}
+
+#moveTitleDiv {
+    display: flex;
+    align-items: flex-end;
+    margin-right: 10px;
+    margin-left: 10px;
 }
