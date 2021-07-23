@@ -1,6 +1,5 @@
-body {
-    width: 1500px;
-    height: 800px;
+#joplin-plugin-content {
+    height: 100vh;
 }
 
 h1 {
@@ -10,10 +9,16 @@ h1 {
 #titlesBar {
     display: flex;
     margin-bottom: 5px;
+    justify-content: space-between;
+}
+
+#moveTitleDiv {
+    display: flex;
+    align-items: flex-end;
 }
 
 .titleInput {
-    width: 100%;
+    width: 45%;
 }
 
 #titleLeft, #titleRight {
@@ -33,13 +38,10 @@ h1 {
 
 #moveTitleButton {
     font-size: large;
-    width: 70px;
+    width: 5%;
     height: 35px;
 }
 
-#moveTitleDiv {
-    display: flex;
-    align-items: flex-end;
-    margin-right: 10px;
-    margin-left: 10px;
+#conflictRes-Editor {
+    height: 100%;
 }
