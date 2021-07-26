@@ -9,6 +9,18 @@ function log(message) {
     console.log(`Conflict Resolution Plugin: ` + message);
 }
 
+function resizeCodeMiror(mergeView) {
+    const height = document.getElementById('conflictRes-Editor').getBoundingClientRect().height;
+    if (mergeView.leftOriginal()) {
+        mergeView.leftOriginal().setSize(null, height);
+    }
+    mergeView.editor().setSize(null, height);
+    if (mergeView.rightOriginal()) {
+        mergeView.rightOriginal().setSize(null, height);
+    }
+    mergeView.wrap.style.height = height + 'px';
+}
+
 async function initCodeMirror(curTimeout) {
     // If CodeMirror hasn't loaded yet, restart the timer. The waiting time is increased exponentially.
     if (typeof CodeMirror === 'undefined') {
@@ -53,6 +65,13 @@ async function initCodeMirror(curTimeout) {
         value: curNote,
         lineWrapping: true,
     });
+
+    /* AUTO RESIZE CODE */
+    resizeCodeMiror(myCodeMirror);
+
+    window.onresize = () => {
+        resizeCodeMiror(myCodeMirror);
+    };
 
     document.getElementById('titleLeft').value = remoteTitle;
     document.getElementById('titleRight').value = curTitle;

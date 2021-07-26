@@ -50,6 +50,7 @@ export class DiffWindow {
                 title: 'Cancel',
             },
         ]);
+        await (this.joplinDialogs as any).setFitToContent(this.handle, false);
     }
 
     /**
