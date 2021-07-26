@@ -15,6 +15,13 @@ h1 {
 #moveTitleDiv {
     display: flex;
     align-items: flex-end;
+    width: 8%;
+}
+
+#moveTitleButton {
+    font-size: large;
+    height: 35px;
+    width: 100%;
 }
 
 .titleInput {
@@ -24,7 +31,8 @@ h1 {
 #titleLeft, #titleRight {
     font-size: large;
     padding: 5px;
-    width: 98%;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 #dialogTitle {
@@ -36,12 +44,7 @@ h1 {
     font-size: medium;
 }
 
-#moveTitleButton {
-    font-size: large;
-    width: 5%;
-    height: 35px;
-}
-
 #conflictRes-Editor {
     height: 100%;
+    overflow: hidden;
 }

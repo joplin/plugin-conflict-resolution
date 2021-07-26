@@ -9,30 +9,14 @@ function log(message) {
     console.log(`Conflict Resolution Plugin: ` + message);
 }
 
-function mergeViewHeight(mergeView) {
-    function editorHeight(editor) {
-        if (!editor) return 0;
-        return editor.getScrollInfo().height;
+function resizeCodeMiror(mergeView) {
+    const height = document.getElementById('conflictRes-Editor').getBoundingClientRect().height;
+    if (mergeView.leftOriginal()) {
+        mergeView.leftOriginal().setSize(null, height);
     }
-    return Math.max(editorHeight(mergeView.leftOriginal()),
-        editorHeight(mergeView.editor()),
-        editorHeight(mergeView.rightOriginal()));
-}
-
-function resize(mergeView) {
-    let height = mergeViewHeight(mergeView);
-    for (;;) {
-        if (mergeView.leftOriginal()) {
-            mergeView.leftOriginal().setSize(null, height);
-        }
-        mergeView.editor().setSize(null, height);
-        if (mergeView.rightOriginal()) {
-            mergeView.rightOriginal().setSize(null, height);
-        }
-
-        const newHeight = mergeViewHeight(mergeView);
-        if (newHeight >= height) break;
-        else height = newHeight;
+    mergeView.editor().setSize(null, height);
+    if (mergeView.rightOriginal()) {
+        mergeView.rightOriginal().setSize(null, height);
     }
     mergeView.wrap.style.height = height + 'px';
 }
@@ -83,10 +67,10 @@ async function initCodeMirror(curTimeout) {
     });
 
     /* AUTO RESIZE CODE */
-    resize(myCodeMirror);
+    resizeCodeMiror(myCodeMirror);
 
     window.onresize = () => {
-        resize(myCodeMirror);
+        resizeCodeMiror(myCodeMirror);
     };
 
     document.getElementById('titleLeft').value = remoteTitle;
