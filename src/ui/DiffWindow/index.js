@@ -103,6 +103,19 @@ async function initCodeMirror(curTimeout) {
         document.getElementById('moveTitleButton').setAttribute('disabled', true);
     });
 
+    // Handle button actions:
+    document.getElementById('nextDiffButton').addEventListener('click', () => {
+        myCodeMirror.edit.execCommand('goNextDiff');
+        myCodeMirror.edit.focus();
+    });
+    document.getElementById('prevDiffButton').addEventListener('click', () => {
+        myCodeMirror.edit.execCommand('goPrevDiff');
+        myCodeMirror.edit.focus();
+    });
+    document.getElementById('acceptAllButton').addEventListener('click', () => {
+        myCodeMirror.edit.setValue(remoteNote);
+    });
+
     log('CodeMirror Window loaded successfully.');
 }
 
