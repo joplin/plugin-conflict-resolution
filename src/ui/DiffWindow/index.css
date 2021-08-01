@@ -52,7 +52,11 @@ h1 {
 #buttonsList {
     margin-bottom: 5px;
     display: flex;
-    font-size: medium;
-    justify-content: flex-end;
-    gap: 5px;
+    font-size: large;
+    justify-content: space-between;
+}
+
+#buttonsList button {
+    width: 30px;
+    height: 25px;
 }
