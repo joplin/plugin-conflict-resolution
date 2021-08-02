@@ -34,7 +34,7 @@ export class DiffWindow {
      */
     public async init(id : string) {
         this.handle = await this.joplinDialogs.create(id);
-        await this.joplinDialogs.addScript(this.handle, './lib/fontawesome/css/all.min.css');
+        await this.joplinDialogs.addScript(this.handle, './lib/fontawesome/css/solid.min.css');
         await this.joplinDialogs.addScript(this.handle, './lib/codemirror/lib/codemirror.js');
         await this.joplinDialogs.addScript(this.handle, './lib/codemirror/lib/codemirror.css');
         await this.joplinDialogs.addScript(this.handle, './lib/diff_match_patch/diff_match_patch.js');
