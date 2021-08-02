@@ -8,7 +8,7 @@ h1 {
 
 #titlesBar {
     display: flex;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     justify-content: space-between;
 }
 
@@ -47,4 +47,16 @@ h1 {
 #conflictRes-Editor {
     height: 100%;
     overflow: hidden;
+}
+
+#buttonsList {
+    margin-bottom: 5px;
+    display: flex;
+    font-size: large;
+    justify-content: space-between;
+}
+
+#buttonsList button {
+    width: 30px;
+    height: 25px;
 }

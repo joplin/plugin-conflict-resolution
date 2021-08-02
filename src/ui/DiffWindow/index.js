@@ -5,6 +5,14 @@ const remoteTitle = document.getElementById('remoteTitle').value;
 const curTitle = document.getElementById('curTitle').value;
 let myCodeMirror = null;
 
+
+let lineWrappingStatus = true;
+let alignStatus = true;
+let collapseLines = false;
+
+const newNoteContents = document.getElementById('newNoteContents');
+const newNoteTitle = document.getElementById('newNoteTitle');
+
 function log(message) {
     console.log(`Conflict Resolution Plugin: ` + message);
 }
@@ -21,11 +29,34 @@ function resizeCodeMiror(mergeView) {
     mergeView.wrap.style.height = height + 'px';
 }
 
-async function initCodeMirror(curTimeout) {
+function initCodeMirror(value) {
+    document.getElementById('conflictRes-Editor').innerHTML = '';
+
+    // eslint-disable-next-line new-cap
+    myCodeMirror = CodeMirror.MergeView(document.getElementById('conflictRes-Editor'), {
+        origLeft: remoteNote,
+        mode: 'markdown',
+        lineNumbers: true,
+        connect: alignStatus ? 'align' : null,
+        value: value,
+        lineWrapping: lineWrappingStatus,
+        collapseIdentical: collapseLines ? 3 : false,
+    });
+
+    resizeCodeMiror(myCodeMirror);
+
+    newNoteContents.value = value;
+    myCodeMirror.editor().on('changes', () => {
+        // Keep the noteContents input in sync with CodeMirror value.
+        newNoteContents.value = myCodeMirror.editor().getDoc().getValue();
+    });
+}
+
+async function init(curTimeout) {
     // If CodeMirror hasn't loaded yet, restart the timer. The waiting time is increased exponentially.
     if (typeof CodeMirror === 'undefined') {
         log('Codemirror has not loaded yet, waiting...');
-        setTimeout(initCodeMirror, curTimeout * 2, curTimeout * 2);
+        setTimeout(init, curTimeout * 2, curTimeout * 2);
         return;
     }
 
@@ -56,23 +87,6 @@ async function initCodeMirror(curTimeout) {
 
     await Promise.all(promises);
 
-    // eslint-disable-next-line new-cap
-    myCodeMirror = CodeMirror.MergeView(document.getElementById('conflictRes-Editor'), {
-        origLeft: remoteNote,
-        mode: 'markdown',
-        lineNumbers: true,
-        connect: 'align',
-        value: curNote,
-        lineWrapping: true,
-    });
-
-    /* AUTO RESIZE CODE */
-    resizeCodeMiror(myCodeMirror);
-
-    window.onresize = () => {
-        resizeCodeMiror(myCodeMirror);
-    };
-
     document.getElementById('titleLeft').value = remoteTitle;
     document.getElementById('titleRight').value = curTitle;
 
@@ -81,15 +95,6 @@ async function initCodeMirror(curTimeout) {
     } else {
         document.getElementById('moveTitleButton').removeAttribute('disabled');
     }
-
-    const newNoteContents = document.getElementById('newNoteContents');
-    const newNoteTitle = document.getElementById('newNoteTitle');
-
-    newNoteContents.value = curNote;
-    myCodeMirror.editor().on('changes', () => {
-        // Keep the noteContents input in sync with CodeMirror value.
-        newNoteContents.value = myCodeMirror.editor().getDoc().getValue();
-    });
 
     newNoteTitle.value = document.getElementById('titleRight').value;
     document.getElementById('titleRight').addEventListener('input', () => {
@@ -103,9 +108,45 @@ async function initCodeMirror(curTimeout) {
         document.getElementById('moveTitleButton').setAttribute('disabled', true);
     });
 
+    initCodeMirror(curNote);
+
+    window.onresize = () => {
+        resizeCodeMiror(myCodeMirror);
+    };
+
+    // Handle button actions:
+    document.getElementById('nextDiffButton').addEventListener('click', () => {
+        myCodeMirror.edit.execCommand('goNextDiff');
+        myCodeMirror.edit.focus();
+    });
+    document.getElementById('prevDiffButton').addEventListener('click', () => {
+        myCodeMirror.edit.execCommand('goPrevDiff');
+        myCodeMirror.edit.focus();
+    });
+    document.getElementById('acceptAllButton').addEventListener('click', () => {
+        myCodeMirror.edit.setValue(remoteNote);
+    });
+
+    document.getElementById('collapseButton').addEventListener('click', () => {
+        collapseLines = !collapseLines;
+
+        // For some reason, CodeMirror doesn't have API to configure this after init, so we must repeat.
+        initCodeMirror(newNoteContents.value);
+    });
+    document.getElementById('alignButton').addEventListener('click', () => {
+        alignStatus = !alignStatus;
+
+        // For some reason, CodeMirror doesn't have API to configure this after init, so we must repeat.
+        initCodeMirror(newNoteContents.value);
+    });
+    document.getElementById('wrapLinesButton').addEventListener('click', () => {
+        lineWrappingStatus = !lineWrappingStatus;
+        myCodeMirror.edit.setOption('lineWrapping', lineWrappingStatus);
+    });
+
     log('CodeMirror Window loaded successfully.');
 }
 
 
 // A timeout to make sure CodeMirror is loaded.
-setTimeout(initCodeMirror, 1, 5);
+setTimeout(init, 1, 5);

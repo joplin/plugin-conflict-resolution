@@ -6,15 +6,28 @@
         <input disabled id="titleLeft" value="First Title"/>
     </div>
     <div id="moveTitleDiv">
-        <button id="moveTitleButton">→</button>
+        <button id="moveTitleButton"><i class="fas fa-arrow-right"></i></button>
     </div>
     <div class="titleInput" id="titleDivRight">
         <h1>Resolved Note</h1>
         <input id="titleRight" value="Second Title"/>
     </div>
 </div>
+<div id="buttonsList">
+    <div>
+        <button title="Collapse unchanged lines" id="collapseButton"><i class = "fas fa-compress-alt"></i></button>
+        <button title="Align changed segments horizontally" id="alignButton"><i class = "fas fa-arrows-alt-h"></i></button>
+        <button title="Wrap long lines" id="wrapLinesButton"><i class = "fas fa-level-down-alt"></i></button>
+    </div>
+    <div>
+        <button title="Accept all changes" id="acceptAllButton"><i class="fas fa-angle-double-right"></i></button>
+        <button title="Next Difference" id="nextDiffButton"><i class="fas fa-arrow-down"></i></button>
+        <button title="Previous Difference" id="prevDiffButton"><i class="fas fa-arrow-up"></i></button>
+    </div>
+</div>
+<div id="conflictRes-Editor"></div>
+
 <form name="note">
     <input type="hidden" name="newNoteTitle" id="newNoteTitle" value=""/>
     <input type="hidden" name="newNoteContents" id="newNoteContents" value=""/>
 </form>
-<div id="conflictRes-Editor"></div>
