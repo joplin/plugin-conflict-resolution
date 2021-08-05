@@ -56,7 +56,7 @@ export class DiffWindow {
         } catch {
             // If an exception occurs, that means setFitToContent failed, and we must add the CSS to support old versions.
             // The below CSS files basically overrides the changes needed to make the CSS work without setFitToContent.
-            console.log('Concflict Resolution: Error setting fitToContent, injecting old styling instead.');
+            console.log('Conflict Resolution: Error setting fitToContent, overiding with old styling instead.');
             await this.joplinDialogs.addScript(this.handle, './ui/DiffWindow/index-old.css');
         }
     }
