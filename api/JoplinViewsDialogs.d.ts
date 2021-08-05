@@ -59,4 +59,6 @@ export default class JoplinViewsDialogs {
      * Opens the dialog
      */
     open(handle: ViewHandle): Promise<DialogResult>;
+
+    setFitToContent(handle: ViewHandle, status: boolean) : Promise<boolean>;
 }
