@@ -60,3 +60,44 @@ h1 {
     width: 30px;
     height: 25px;
 }
+
+/* THEMING */
+input {
+    border: 1px solid var(--joplin-color);
+    border-radius: 3px;
+    color: var(--joplin-color);
+    background-color: var(--joplin-background-color);
+}
+
+input:focus:enabled {
+    border: 1px solid var(--joplin-color3);
+    outline: none;
+}
+
+input:disabled {
+    opacity: var(--joplin-disabled-opacity);
+}
+
+button {
+    background-color: var(--joplin-background-color5);
+    color: var(--joplin-background-color4);
+    border: none;
+}
+
+button:focus {
+    outline: none;
+}
+
+button:hover:enabled {
+    background-color: var(--joplin-background-color-hover5);
+}
+
+button:active:enabled {
+    background-color: var(--joplin-background-color-active5);
+    border: none;
+}
+
+
+button:disabled {
+    opacity: var(--joplin-disabled-opacity);
+}
