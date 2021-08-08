@@ -97,7 +97,136 @@ button:active:enabled {
     border: none;
 }
 
-
 button:disabled {
     opacity: var(--joplin-disabled-opacity);
 }
+
+/* CODEMIRROR STYLING */
+/* COPIED FROM JOPLIN SOURCE CODE: https://github.com/laurent22/joplin/blob/dev/packages/app-desktop/gui/NoteEditor/NoteBody/CodeMirror/CodeMirror.tsx#L391 */
+
+.CodeMirror {
+    color: inherit !important;
+    background-color: inherit !important;
+    /* Some themes add a box shadow for some reason */
+    -webkit-box-shadow: none !important;
+    line-height: var(--joplin-line-height) !important;
+}
+
+/* Left padding is applied at the editor component level, so we should remove it from the lines */
+.CodeMirror pre.CodeMirror-line,
+.CodeMirror pre.CodeMirror-line-like {
+    padding-left: 0;
+}
+
+.CodeMirror-sizer {
+    /* Add a fixed right padding to account for the appearance (and disappearance) */
+    /* of the sidebar */
+    padding-right: 10px !important;
+}
+
+/* This enforces monospace for certain elements (code, tables, etc.) */
+/* .cm-jn-monospace {
+    font-family: ${monospaceFonts.join(', ')} !important;
+} */
+
+.CodeMirror .cm-header-1 {
+    font-size: 1.5em;
+    color: var(--joplin-color);
+}
+
+.CodeMirror .cm-header-2 {
+    font-size: 1.3em;
+    color: var(--joplin-color);
+}
+
+.CodeMirror .cm-header-3 {
+    font-size: 1.1em;
+    color: var(--joplin-color);
+}
+
+.CodeMirror .cm-header-4, .CodeMirror .cm-header-5, .CodeMirror .cm-header-6 {
+    font-size: 1em;
+    color: var(--joplin-color);
+}
+
+.CodeMirror .cm-quote {
+    color: var(--joplin-color);
+    opacity: var(--joplin-block-quote-opacity);
+}
+
+div.CodeMirror span.cm-link-text {
+    color: var(--joplin-url-color);
+}
+
+div.CodeMirror span.cm-url {
+    color: var(--joplin-url-color);
+    opacity: 0.5;
+}
+
+.CodeMirror .cm-variable-2, .CodeMirror .cm-variable-3, .CodeMirror .cm-keyword {
+    color: var(--joplin-color);
+}
+
+div.CodeMirror span.cm-comment {
+    color: var(--joplin-code-color);
+}
+
+div.CodeMirror span.cm-strong {
+    color: var(--joplin-color-bright);
+}
+
+div.CodeMirror span.cm-hr {
+    color: var(--joplin-divider-color);
+}
+
+.cm-header-1, .cm-header-2, .cm-header-3, .cm-header-4, .cm-header-5, .cm-header-6 {
+    line-height: 1.5em;
+}
+
+.cm-search-marker {
+    background: var(--joplin-search-marker-background-color);
+    color: var(--joplin-search-marker-color) !important;
+}
+
+.cm-search-marker-selected {
+    background: var(--joplin-selected-color2);
+    color: var(--joplin-color2) !important;
+}
+
+.cm-search-marker-scrollbar {
+    background: var(--joplin-search-marker-background-color);
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    opacity: .5;
+}
+
+/* We need to use important to override theme specific values */
+.cm-error {
+    color: inherit !important;
+    background-color: inherit !important;
+    border-bottom: 1px dotted #dc322f;
+}
+
+/* The default dark theme colors don't have enough contrast with the background */
+
+/*
+.cm-s-nord span.cm-comment {
+    color: #9aa4b6 !important;
+}
+
+.cm-s-dracula span.cm-comment {
+    color: #a1abc9 !important;
+}
+
+.cm-s-monokai span.cm-comment {
+    color: #908b74 !important;
+}
+
+.cm-s-material-darker span.cm-comment {
+    color: #878787 !important;
+}
+
+.cm-s-solarized.cm-s-dark span.cm-comment {
+    color: #8ba1a7 !important;
+}
+*/
