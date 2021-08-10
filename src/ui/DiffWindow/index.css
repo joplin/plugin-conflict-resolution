@@ -60,3 +60,158 @@ h1 {
     width: 30px;
     height: 25px;
 }
+
+/* THEMING */
+input {
+    border: 1px solid var(--joplin-color);
+    border-radius: 3px;
+    color: var(--joplin-color);
+    background-color: var(--joplin-background-color);
+}
+
+input:focus:enabled {
+    border: 1px solid var(--joplin-color3);
+    outline: none;
+}
+
+input:disabled {
+    opacity: var(--joplin-disabled-opacity);
+}
+
+button {
+    background-color: var(--joplin-background-color5);
+    color: var(--joplin-background-color4);
+    border: none;
+}
+
+button:focus {
+    outline: none;
+}
+
+button:hover:enabled {
+    background-color: var(--joplin-background-color-hover5);
+}
+
+button:active:enabled {
+    background-color: var(--joplin-background-color-active5);
+    border: none;
+}
+
+button:disabled {
+    opacity: var(--joplin-disabled-opacity);
+}
+
+/* CODEMIRROR STYLING */
+/* COPIED FROM JOPLIN SOURCE CODE: https://github.com/laurent22/joplin/blob/dev/packages/app-desktop/gui/NoteEditor/NoteBody/CodeMirror/CodeMirror.tsx#L391 */
+
+.CodeMirror {
+    color: inherit !important;
+    background-color: inherit !important;
+    -webkit-box-shadow: none !important;
+    line-height: var(--joplin-line-height) !important;
+}
+
+.CodeMirror .cm-header-1 {
+    font-size: 1.5em;
+    color: var(--joplin-color);
+}
+
+.CodeMirror .cm-header-2 {
+    font-size: 1.3em;
+    color: var(--joplin-color);
+}
+
+.CodeMirror .cm-header-3 {
+    font-size: 1.1em;
+    color: var(--joplin-color);
+}
+
+.CodeMirror .cm-header-4, .CodeMirror .cm-header-5, .CodeMirror .cm-header-6 {
+    font-size: 1em;
+    color: var(--joplin-color);
+}
+
+.CodeMirror .cm-quote {
+    color: var(--joplin-color);
+    opacity: var(--joplin-block-quote-opacity);
+}
+
+div.CodeMirror span.cm-link-text {
+    color: var(--joplin-url-color);
+}
+
+div.CodeMirror span.cm-url {
+    color: var(--joplin-url-color);
+    opacity: 0.5;
+}
+
+.CodeMirror .cm-variable-2, .CodeMirror .cm-variable-3, .CodeMirror .cm-keyword {
+    color: var(--joplin-color);
+}
+
+div.CodeMirror span.cm-comment {
+    color: var(--joplin-code-color);
+}
+
+div.CodeMirror span.cm-strong {
+    color: var(--joplin-color-bright);
+}
+
+div.CodeMirror span.cm-hr {
+    color: var(--joplin-divider-color);
+}
+
+.cm-header-1, .cm-header-2, .cm-header-3, .cm-header-4, .cm-header-5, .cm-header-6 {
+    line-height: 1.5em;
+}
+
+.cm-search-marker {
+    background: var(--joplin-search-marker-background-color);
+    color: var(--joplin-search-marker-color) !important;
+}
+
+.cm-search-marker-selected {
+    background: var(--joplin-selected-color2);
+    color: var(--joplin-color2) !important;
+}
+
+.cm-search-marker-scrollbar {
+    background: var(--joplin-search-marker-background-color);
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    opacity: .5;
+}
+
+
+.CodeMirror-selected {
+    background: var(--joplin-color-faded) !important;
+}
+
+.CodeMirror-gutters {
+    background-color: inherit !important;
+    color: inherit !important;
+}
+
+.CodeMirror-merge-gap {
+    background-color: inherit !important;
+    color: inherit !important;
+}
+
+.CodeMirror-merge-l-chunk {
+    background-color: var(--joplin-background-color5);
+    opacity: 0.6;
+}
+
+.CodeMirror-merge-l-chunk-start {
+    border-top: 1px solid var(--joplin-background-color-hover5);
+}
+
+.CodeMirror-merge-l-chunk-end {
+    border-bottom: 1px solid var(--joplin-background-color-hover5);
+}
+
+.CodeMirror-merge-l-connect {
+    fill: var(--joplin-background-color5);
+    stroke: var(--joplin-background-color-hover5);
+    opacity: 0.6;
+}
