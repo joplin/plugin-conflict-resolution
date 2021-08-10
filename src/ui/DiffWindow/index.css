@@ -107,27 +107,9 @@ button:disabled {
 .CodeMirror {
     color: inherit !important;
     background-color: inherit !important;
-    /* Some themes add a box shadow for some reason */
     -webkit-box-shadow: none !important;
     line-height: var(--joplin-line-height) !important;
 }
-
-/* Left padding is applied at the editor component level, so we should remove it from the lines */
-.CodeMirror pre.CodeMirror-line,
-.CodeMirror pre.CodeMirror-line-like {
-    padding-left: 0;
-}
-
-.CodeMirror-sizer {
-    /* Add a fixed right padding to account for the appearance (and disappearance) */
-    /* of the sidebar */
-    padding-right: 10px !important;
-}
-
-/* This enforces monospace for certain elements (code, tables, etc.) */
-/* .cm-jn-monospace {
-    font-family: ${monospaceFonts.join(', ')} !important;
-} */
 
 .CodeMirror .cm-header-1 {
     font-size: 1.5em;
@@ -200,33 +182,36 @@ div.CodeMirror span.cm-hr {
     opacity: .5;
 }
 
-/* We need to use important to override theme specific values */
-.cm-error {
-    color: inherit !important;
+
+.CodeMirror-selected {
+    background: var(--joplin-color-faded) !important;
+}
+
+.CodeMirror-gutters {
     background-color: inherit !important;
-    border-bottom: 1px dotted #dc322f;
+    color: inherit !important;
 }
 
-/* The default dark theme colors don't have enough contrast with the background */
-
-/*
-.cm-s-nord span.cm-comment {
-    color: #9aa4b6 !important;
+.CodeMirror-merge-gap {
+    background-color: inherit !important;
+    color: inherit !important;
 }
 
-.cm-s-dracula span.cm-comment {
-    color: #a1abc9 !important;
+.CodeMirror-merge-l-chunk {
+    background-color: var(--joplin-background-color5);
+    opacity: 0.6;
 }
 
-.cm-s-monokai span.cm-comment {
-    color: #908b74 !important;
+.CodeMirror-merge-l-chunk-start {
+    border-top: 1px solid var(--joplin-background-color-hover5);
 }
 
-.cm-s-material-darker span.cm-comment {
-    color: #878787 !important;
+.CodeMirror-merge-l-chunk-end {
+    border-bottom: 1px solid var(--joplin-background-color-hover5);
 }
 
-.cm-s-solarized.cm-s-dark span.cm-comment {
-    color: #8ba1a7 !important;
+.CodeMirror-merge-l-connect {
+    fill: var(--joplin-background-color5);
+    stroke: var(--joplin-background-color-hover5);
+    opacity: 0.6;
 }
-*/
