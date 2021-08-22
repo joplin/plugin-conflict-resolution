@@ -1,8 +1,7 @@
 # Conflict Resolution Plugin
 This plugin adds a context menu option on conflict notes to open a merge menu. Once clicked a diff viewer will be shown to aid in merging the notes together.
 
-https://user-images.githubusercontent.com/8184424/130370163-905b6f39-3109-4de4-9e98-5c09904870bb.mp4
-
+![Preview](https://github.com/joplin/plugin-conflict-resolution/raw/master/Preview.gif)
 
 ## Timeline
 ### June 7 - June 21 (2 weeks)
