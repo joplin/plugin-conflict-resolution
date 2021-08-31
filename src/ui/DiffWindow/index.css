@@ -215,3 +215,13 @@ div.CodeMirror span.cm-hr {
     stroke: var(--joplin-background-color-hover5);
     opacity: 0.6;
 }
+
+.CodeMirror-merge-copy {
+    font-size: 16px;
+    color: var(--joplin-background-color5);
+}
+
+.CodeMirror-merge-scrolllock {
+    font-size: 16px;
+    color: var(--joplin-background-color5);
+}
