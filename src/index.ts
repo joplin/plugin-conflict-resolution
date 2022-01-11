@@ -21,17 +21,17 @@ async function openDiffWindow(noteIds : string[]) {
         fields: ['is_conflict', 'conflict_original_id'],
     });
 
-    if (localNote.is_conflict === 0) {
-        return await joplin.views.dialogs.showMessageBox('This is not a conflict note.');
+    let compareWithId = '';
+    if (localNote.is_conflict === 1) {
+        compareWithId = localNote.conflict_original_id;
     }
 
-    let compareWithId = localNote.conflict_original_id;
     if (compareWithId === '') {
         compareWithId = await noteSelectWindow.openDialog();
     }
 
     if (compareWithId === '') {
-    // No note was found to compare to and user didn't select a note. Cancel button must have been pressed.
+        // No note was found to compare to and user didn't select a note. Cancel button must have been pressed.
         return;
     }
 
@@ -68,7 +68,7 @@ joplin.plugins.register({
         await joplin.commands.register({
             name: 'resolveConflictsCommand',
             label: 'Resolve Conflict',
-            enabledCondition: 'oneNoteSelected && inConflictFolder',
+            enabledCondition: 'oneNoteSelected',
             execute: openDiffWindow,
         });
 
